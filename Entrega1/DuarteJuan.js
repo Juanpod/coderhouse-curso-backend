@@ -8,6 +8,9 @@ class Usuario{
     getFullname(){
         return `${this.nombre} ${this.apellido}`;
     }
+    addMascota(nombre){
+        this.mascotas.push(nombre);
+    }
     countMascotas(){
         return this.mascotas.length;
     }
@@ -31,3 +34,6 @@ console.log("Tiene", usuario.countMascotas(),"mascotas");
 usuario.addBook("Yo Robot","Isaac Asimov");
 const nombres = usuario.getBookNames();
 console.log("Tiene en su coleccion de libros", nombres);
+//Añadir mascota.
+usuario.addMascota("Firulais");
+console.log("Sus mascotas se llaman", usuario.mascotas);
