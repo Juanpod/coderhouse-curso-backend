@@ -1,5 +1,3 @@
-const { syncBuiltinESMExports } = require("module");
-const { resolve } = require("path");
 const {Contenedor} = require("./clase") ;
 
 const contenedor = new Contenedor("productos")

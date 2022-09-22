@@ -1,7 +1,4 @@
-// const { Console } = require('console');
 const fs = require('fs');
-//const { json } = require('stream/consumers');
-
 class Contenedor{
     constructor(archivo){
         this.archivo = archivo;
@@ -10,7 +7,8 @@ class Contenedor{
        // Recibe un objeto, lo guarda en el archivo, devuelve el id asignado
        try {
             try{
-                await fs.promises.readFile(`${this.archivo}.txt`, "utf-8"); //Si no existe el archivo productos.txt encuentra un error y lo crea
+                //Si no existe el archivo productos.txt encuentra un error y lo crea
+                await fs.promises.readFile(`${this.archivo}.txt`, "utf-8"); 
             }
             catch{
                 await fs.promises.writeFile(`${this.archivo}.txt`,JSON.stringify([],null,2));
@@ -25,7 +23,7 @@ class Contenedor{
                     console.log(error);
                 }
             }
-            const jsondata = JSON.parse(data); // Convirtiendo el texto en un objeto de javascript
+            const jsondata = JSON.parse(data);
             //Asignandole un numero de id tomando en cuenta el id anterior
             let id;
             if(jsondata.length == 0){
@@ -43,14 +41,14 @@ class Contenedor{
        catch(error){
         console.log("No se pudo agregar el producto")
        }
-       
-
     }
     async getById(id){
         //Recibe un id y devuelve el objeto con ese id, o null si no está
         try{
-            let data = await fs.promises.readFile(`${this.archivo}.txt`, "utf-8"); //Leyendo el contenido actual del archivo
-            const jsondata = JSON.parse(data); // Convirtiendo el texto en un objeto de javascript
+            //Leyendo el contenido actual del archivo
+            let data = await fs.promises.readFile(`${this.archivo}.txt`, "utf-8"); 
+            // Convirtiendo el texto en un objeto de javascript
+            const jsondata = JSON.parse(data); 
             let exist = false
             for (const producto in jsondata){
                 if (jsondata[producto].id == id){
@@ -66,9 +64,6 @@ class Contenedor{
         catch(error){
             console.log("No se pudo buscar el producto", error)
         }
-
-
-
     }
     async getAll(){
         //Devuelve un array con los objetos presentes en el archivo
@@ -83,8 +78,10 @@ class Contenedor{
     async deleteById(id){
         //Elimina del archivo el objeto con id buscado
         try{
-            let data = await fs.promises.readFile(`${this.archivo}.txt`, "utf-8"); //Leyendo el contenido actual del archivo
-            const jsondata = JSON.parse(data); // Convirtiendo el texto en un objeto de javascript
+            //Leyendo el contenido actual del archivo
+            let data = await fs.promises.readFile(`${this.archivo}.txt`, "utf-8"); 
+            // Convirtiendo el texto en un objeto de javascript
+            const jsondata = JSON.parse(data); 
             let exist = false
             for (const producto in jsondata){
                 if (jsondata[producto].id == id){
@@ -102,19 +99,20 @@ class Contenedor{
         catch(error){
             console.log("No se pudo borrar", error);
         }
-        
-        
     }
     async deleteAll(){
         //Elimina todos los objetos presentes en el archivo
         try{
-            
-            let data = await fs.promises.readFile(`${this.archivo}.txt`, "utf-8"); //Leyendo el contenido actual del archivo
-            const jsondata = JSON.parse(data); // Convirtiendo el texto en un objeto de javascript
+            //Leyendo el contenido actual del archivo
+            let data = await fs.promises.readFile(`${this.archivo}.txt`, "utf-8"); 
+            // Convirtiendo el texto en un objeto de javascript
+            const jsondata = JSON.parse(data); 
+            //El metodo splice permite eliminar los objetos
             jsondata.splice(0,jsondata.length)
             await fs.promises.writeFile(`${this.archivo}.txt`,JSON.stringify(jsondata,null,2));
             console.log("Todos los productos fueron borrados")
             // Otra forma de borrar todo es sobrescribiendo el archivo con un array vacio []
+            //
             // await fs.promises.writeFile(`${this.archivo}.txt`,JSON.stringify([],null,2));
             // console.log("Objetos borrados");
         }
