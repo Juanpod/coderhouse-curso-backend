@@ -124,20 +124,3 @@ class Contenedor{
 
 }
 module.exports = {Contenedor}
-
-
-
-
-
-
-
-
-
-// fs.readFile(contenedor.archivo,"utf-8", (error, contenido)=>{
-//     if(error){
-//         console.log(error);
-//     } else {
-//         const data = JSON.parse(contenido);
-//         console.log(data)
-//     }
-// });

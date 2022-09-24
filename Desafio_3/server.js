@@ -1,4 +1,4 @@
-const {Contenedor} = require("./clase") ;
+const {Contenedor} = require("./clase.js");
 const express = require("express");
 
 const contenedor = new Contenedor("productos")
