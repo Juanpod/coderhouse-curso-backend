@@ -8,7 +8,8 @@ class Contenedor{
        try {
             try{
                 //Si no existe el archivo productos.txt encuentra un error y lo crea
-                await fs.promises.readFile(`${this.archivo}.txt`, "utf-8"); 
+                let data = await fs.promises.readFile(`${this.archivo}.txt`, "utf-8"); 
+                JSON.parse(data);
             }
             catch{
                 await fs.promises.writeFile(`${this.archivo}.txt`,JSON.stringify([],null,2));
