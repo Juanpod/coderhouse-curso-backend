@@ -1,0 +1,21 @@
+if productos.length>0
+    table(style='width:80%', border='1')
+        tr
+            th ID 
+            th Nombre 
+            th Precio 
+            th Imagen 
+        each val in productos
+            tr 
+                td !{val.id}
+                td !{val.nombre}
+                td !{val.precio}
+                td
+                    img(src=val.imagen, alt='imagen', style='width:50px;height:50px;')
+else 
+    h2="No hay productos"
+
+
+
+
+                    
