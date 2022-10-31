@@ -1,8 +1,0 @@
-[
-  {
-    "nombre": "Cocacola",
-    "precio": "250",
-    "imagen": "www",
-    "id": 1
-  }
-]

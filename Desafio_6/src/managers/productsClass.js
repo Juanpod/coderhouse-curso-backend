@@ -1,27 +1,28 @@
-const fs = require("fs");
+const fs = require('fs');
+const path = require('path');
 class Contenedor{
     constructor(archivo){
-        this.archivo = archivo;
+        this.archivo = path.join(__dirname,"..",`files/${archivo}`);
     }
     async save(Object){
        // Recibe un objeto, lo guarda en el archivo, devuelve el id asignado
        try {
             try{
                 //Si no existe el archivo productos.txt encuentra un error y lo crea
-                let data = await fs.promises.readFile(`${this.archivo}.txt`, "utf-8"); 
+                let data = await fs.promises.readFile(this.archivo, "utf-8"); 
                 let jsondata = JSON.parse(data);
                 if(typeof(jsondata) != typeof([])){
                     throw new Error
                 }
             }
             catch{
-                await fs.promises.writeFile(`${this.archivo}.txt`,JSON.stringify([],null,2));
+                await fs.promises.writeFile(this.archivo,JSON.stringify([],null,2));
             }
-            let data = await fs.promises.readFile(`${this.archivo}.txt`, "utf-8");
+            let data = await fs.promises.readFile(this.archivo, "utf-8");
             if (data ==""){
                 try{
-                    await fs.promises.writeFile(`${this.archivo}.txt`,JSON.stringify([],null,2));
-                    data = await fs.promises.readFile(`${this.archivo}.txt`, "utf-8")
+                    await fs.promises.writeFile(this.archivo,JSON.stringify([],null,2));
+                    data = await fs.promises.readFile(this.archivo, "utf-8")
                 }
                 catch(error){
                     console.log(error);
@@ -38,7 +39,7 @@ class Contenedor{
             Object["id"] = id;
             //Agregando el objeto al arreglo existente
             await jsondata.push(Object)
-            await fs.promises.writeFile(`${this.archivo}.txt`,JSON.stringify(jsondata,null,2));
+            await fs.promises.writeFile(this.archivo,JSON.stringify(jsondata,null,2));
             console.log(`Producto guardado, con el numero de id ${id}`)
             }
             
@@ -58,7 +59,7 @@ class Contenedor{
                 ...body,
                 id:id
             };
-            await fs.promises.writeFile(`${this.archivo}.txt`,JSON.stringify(productos,null,2));
+            await fs.promises.writeFile(this.archivo,JSON.stringify(productos,null,2));
             return productos;
         } catch (error) {
             console.log("No se puede actualizar el producto")
@@ -68,7 +69,7 @@ class Contenedor{
         //Recibe un id y devuelve el objeto con ese id, o null si no está
         try{
             //Leyendo el contenido actual del archivo
-            let data = await fs.promises.readFile(`${this.archivo}.txt`, "utf-8"); 
+            let data = await fs.promises.readFile(this.archivo, "utf-8"); 
             // Convirtiendo el texto en un objeto de javascript
             const jsondata = JSON.parse(data); 
             let exist = false
@@ -90,11 +91,7 @@ class Contenedor{
     async getAll(){
         //Devuelve un array con los objetos presentes en el archivo
         try {
-            let data = await fs.promises.readFile(`${this.archivo}.txt`, "utf-8");
-            if (data == "") {
-                let productos = [];
-                return productos;
-            }
+            let data = await fs.promises.readFile(this.archivo, "utf-8");
             let productos = JSON.parse(data);
             return productos;
         }
@@ -106,7 +103,7 @@ class Contenedor{
         //Elimina del archivo el objeto con id buscado
         try{
             //Leyendo el contenido actual del archivo
-            let data = await fs.promises.readFile(`${this.archivo}.txt`, "utf-8"); 
+            let data = await fs.promises.readFile(this.archivo, "utf-8"); 
             // Convirtiendo el texto en un objeto de javascript
             const jsondata = JSON.parse(data); 
             let exist = false
@@ -114,7 +111,7 @@ class Contenedor{
                 if (jsondata[producto].id == id){
                     exist = true
                     jsondata.splice(producto,1)
-                    await writeFile(`${this.archivo}.txt`,JSON.stringify(jsondata,null,2));
+                    await fs.promises.writeFile(this.archivo,JSON.stringify(jsondata,null,2));
                     console.log(`Producto con el id ${id} borrado con exito`)
                 }
             }
@@ -131,12 +128,12 @@ class Contenedor{
         //Elimina todos los objetos presentes en el archivo
         try{
             //Leyendo el contenido actual del archivo
-            let data = await fs.promises.readFile(`${this.archivo}.txt`, "utf-8"); 
+            let data = await fs.promises.readFile(this.archivo, "utf-8"); 
             // Convirtiendo el texto en un objeto de javascript
             const jsondata = JSON.parse(data); 
             //El metodo splice permite eliminar los objetos
             jsondata.splice(0,jsondata.length)
-            await fs.promises.writeFile(`${this.archivo}.txt`,JSON.stringify(jsondata,null,2));
+            await fs.promises.writeFile(this.archivo,JSON.stringify(jsondata,null,2));
             console.log("Todos los productos fueron borrados")
             // Otra forma de borrar todo es sobrescribiendo el archivo con un array vacio []
             //
