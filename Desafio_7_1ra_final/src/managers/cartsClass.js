@@ -30,6 +30,25 @@ class Carrito {
             console.log("No se pudo crear el carrito")
         }
     }
+    async borrarCarrito(id){
+        let data = await fs.promises.readFile(this.nameFile, "utf-8");
+        const jsondata = JSON.parse(data);
+        let exist = false;
+        for (const producto in jsondata){
+            if (jsondata[producto].id == id){
+                exist = true
+                jsondata.splice(producto,1)
+                await fs.promises.writeFile(this.nameFile,JSON.stringify(jsondata,null,2));
+                console.log(`Carrito con el id ${id} borrado con exito`)
+            }
+        }
+        if(!exist){
+            console.log("No se encontró el producto");
+            return false;
+        } else {
+            return true;
+        }
+    }
 }
 
 module.exports = {Carrito}

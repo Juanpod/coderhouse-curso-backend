@@ -19,6 +19,20 @@ routerCarritos.post("/", async(req,res)=>{
         }
 })
 
+routerCarritos.delete("/:id", async (req, res) =>{
+    let id = req.params.id;
+    let result = await carrito.borrarCarrito(id);
+    if(result){
+        res.json({
+            mensaje: "carrito borrado"
+        })
+    } else {
+        res.json({
+            mensaje: "carrito no encontrado"
+        })
+    }
+})
+
 
 
 
