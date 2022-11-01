@@ -4,6 +4,7 @@ const path = require('path');
 const express = require('express');
 const app = express();
 const routerProdutos = require('./routes/productos.js');
+const routerCarritos = require('./routes/carritos.js');
 
 
 
@@ -20,6 +21,7 @@ app.use(express.urlencoded({extended:true}));
 
 //Middleware para que el servidor use router al llegar a /
 app.use('/api/productos', routerProdutos);
+app.use('/api/carrito', routerCarritos);
 
 //express server
 app.listen(PORT,()=>{
