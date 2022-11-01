@@ -31,22 +31,48 @@ class Carrito {
         }
     }
     async borrarCarrito(id){
-        let data = await fs.promises.readFile(this.nameFile, "utf-8");
-        const jsondata = JSON.parse(data);
-        let exist = false;
-        for (const producto in jsondata){
-            if (jsondata[producto].id == id){
-                exist = true
-                jsondata.splice(producto,1)
-                await fs.promises.writeFile(this.nameFile,JSON.stringify(jsondata,null,2));
-                console.log(`Carrito con el id ${id} borrado con exito`)
+        try {
+                let data = await fs.promises.readFile(this.nameFile, "utf-8");
+            const jsondata = JSON.parse(data);
+            let exist = false;
+            for (const producto in jsondata){
+                if (jsondata[producto].id == id){
+                    exist = true
+                    jsondata.splice(producto,1)
+                    await fs.promises.writeFile(this.nameFile,JSON.stringify(jsondata,null,2));
+                    console.log(`Carrito con el id ${id} borrado con exito`)
+                }
             }
+            if(!exist){
+                console.log("No se encontró el producto");
+                return false;
+            } else {
+                return true;
+            }
+        } catch {
+            onsole.log("No se pudo buscar el carrito", error)
         }
-        if(!exist){
-            console.log("No se encontró el producto");
-            return false;
-        } else {
-            return true;
+        
+    }
+
+    async getById(id) {
+        try {
+            let data = await fs.promises.readFile(this.nameFile, "utf-8");
+            const jsondata = JSON.parse(data);
+            let exist = false
+            for (const carrito in jsondata){
+                if (jsondata[carrito].id == id){
+                    exist = true
+                    const producto = jsondata[carrito];
+                    return producto.productos;
+                }
+            }
+            if(!exist){
+                console.log("No se encontró el carrito")
+                return false
+            }
+        } catch {
+            Console.log("No se pudo buscar el carrito", error)
         }
     }
 }

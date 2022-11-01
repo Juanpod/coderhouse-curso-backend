@@ -20,16 +20,39 @@ routerCarritos.post("/", async(req,res)=>{
 })
 
 routerCarritos.delete("/:id", async (req, res) =>{
-    let id = req.params.id;
-    let result = await carrito.borrarCarrito(id);
-    if(result){
-        res.json({
-            mensaje: "carrito borrado"
-        })
-    } else {
-        res.json({
-            mensaje: "carrito no encontrado"
-        })
+    try {
+        let id = req.params.id;
+        let result = await carrito.borrarCarrito(id);
+        if(result){
+            res.json({
+                mensaje: "carrito borrado"
+            })
+        } else {
+            res.json({
+                mensaje: "carrito no encontrado"
+            })
+        }
+    } catch {
+        console.log("no se pudo borrar el carrito");
+    }
+
+})
+
+routerCarritos.get("/:id/productos", async (req,res) => {
+    try {
+        let id = req.params.id;
+        const productos = await carrito.getById(id);
+        if(productos){
+            res.json({
+                productos : productos
+            })
+        } else {
+            res.json({
+                mensaje : "no se encontro el carrito"
+            })
+        }
+    } catch {
+        console.log("no se pudo buscar el carrito");
     }
 })
 
