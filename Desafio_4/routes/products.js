@@ -70,7 +70,7 @@ productsRouter.put("/:id", async(req,res)=>{
 productsRouter.delete("/:id", async(req,res)=>{
     try{
         const id = req.params.id;
-        producto = await contenedor.getById(id);
+        let producto = await contenedor.getById(id);
         if(producto){
             await contenedor.deleteById(id);
             res.json({
