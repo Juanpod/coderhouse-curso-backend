@@ -36,6 +36,7 @@ class Contenedor{
             } else {
                 id = jsondata[jsondata.length-1].id + 1;
             }
+            Object["timestamp"] = Date.now();
             Object["id"] = id;
             //Agregando el objeto al arreglo existente
             await jsondata.push(Object)
@@ -53,7 +54,7 @@ class Contenedor{
             const index = productos.findIndex(elm=>elm.id === id);
             if(index == -1){
                 console.log("No se encuentra el id")
-                return null
+                return false
             }
             productos[index] = {
                 ...body,
@@ -81,7 +82,7 @@ class Contenedor{
             }
             if(!exist){
                 console.log("No se encontró el producto")
-                return null
+                return false
             }
         }
         catch(error){
@@ -117,7 +118,7 @@ class Contenedor{
             }
             if(!exist){
                 console.log("No se encontró el producto")
-                return null
+                return false
             }
         }
         catch(error){
