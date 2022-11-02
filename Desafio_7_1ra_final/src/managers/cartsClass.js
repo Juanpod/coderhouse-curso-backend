@@ -63,8 +63,8 @@ class Carrito {
             for (const carrito in jsondata){
                 if (jsondata[carrito].id == id){
                     exist = true
-                    const producto = jsondata[carrito];
-                    return producto.productos;
+                    const cart = jsondata[carrito];
+                    return cart.productos;
                 }
             }
             if(!exist){
@@ -73,6 +73,25 @@ class Carrito {
             }
         } catch {
             Console.log("No se pudo buscar el carrito", error)
+        }
+    }
+    async addProduct(id, product) {
+        try {
+            let data = await fs.promises.readFile(this.nameFile, "utf-8");
+            const carritos = JSON.parse(data);
+            const index = carritos.findIndex(elm=>elm.id === id);
+            if(index == -1){
+                console.log("No se encuentra el carrito")
+                return false
+            } else {
+                const cart = carritos[index];
+                cart.productos.push(product);
+                carritos[index] = cart;
+                await fs.promises.writeFile(this.nameFile, JSON.stringify(carritos,null,2));
+                console.log("Producto agregado")
+            }
+        } catch {
+            console.log("No se pudo agregar el producto al carrito");
         }
     }
 }

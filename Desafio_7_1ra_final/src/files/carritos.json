@@ -2,11 +2,22 @@
   {
     "id": 2,
     "timestamp": 1667337820870,
-    "productos": []
+    "productos": [
+      {
+        "nombre": "Cocacola",
+        "descripcion": "Bebida cola",
+        "precio": 250,
+        "codigo": "CC500",
+        "stock": 25,
+        "imagen": "https://xmayor.cl/wp-content/uploads/2021/06/COCA-COLA-ORIGINAL-350CC-LATA.jpg",
+        "timestamp": 1667332581306,
+        "id": 2
+      }
+    ]
   },
   {
     "id": 3,
-    "timestamp": 1667337903143,
+    "timestamp": 1667338663287,
     "productos": []
   },
   {

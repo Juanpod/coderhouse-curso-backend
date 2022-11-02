@@ -5,6 +5,10 @@ const {Carrito} = require('../managers/cartsClass.js');
 
 const carrito = new Carrito("carritos.json");
 
+const {Contenedor} = require('../managers/productsClass.js');
+
+const productos = new Contenedor("productos.json");
+
 routerCarritos.post("/", async(req,res)=>{
         try{
             let id = await carrito.crearCarrito();
@@ -41,10 +45,10 @@ routerCarritos.delete("/:id", async (req, res) =>{
 routerCarritos.get("/:id/productos", async (req,res) => {
     try {
         let id = req.params.id;
-        const productos = await carrito.getById(id);
-        if(productos){
+        const productosCarrito = await carrito.getById(id);
+        if(productosCarrito){
             res.json({
-                productos : productos
+                productos : productosCarrito
             })
         } else {
             res.json({
@@ -53,6 +57,35 @@ routerCarritos.get("/:id/productos", async (req,res) => {
         }
     } catch {
         console.log("no se pudo buscar el carrito");
+    }
+})
+
+routerCarritos.post("/:id/productos/:id_prod", async (req,res) => {
+    try {
+        let id = parseInt(req.params.id);
+        let idProduct = req.params.id_prod;
+        const newProduct = await productos.getById(idProduct);
+        const existCart = await carrito.getById(id);
+        if(existCart){
+            if(newProduct){
+                await carrito.addProduct(id,newProduct);
+                res.json({
+                    mensaje: "exito"
+                }) 
+            } else {
+                res.json({
+                    mensaje: "no se encuentra el producto"
+                }) 
+            }
+        } else {
+            res.json({
+                mensaje: "no se encuentra el carrito"
+            }) 
+        }
+        
+        
+    } catch {
+        console.log("no se pudo buscar el carrito")
     }
 })
 
