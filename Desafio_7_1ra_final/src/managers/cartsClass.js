@@ -94,6 +94,26 @@ class Carrito {
             console.log("No se pudo agregar el producto al carrito");
         }
     }
+    async deleteProduct(id, idProduct) {
+        try {
+            let data = await fs.promises.readFile(this.nameFile, "utf-8");
+            const carritos = JSON.parse(data);
+            const index = carritos.findIndex(elm=>elm.id === id);
+            if(index == -1){
+                console.log("No se encuentra el carrito")
+                return false
+            } else {
+                const cart = carritos[index];
+                const productos =cart.productos
+                const index2 = productos.findIndex(elm=>elm.id === idProduct);
+                productos.splice(index2,1);
+                carritos[index] = cart;
+                await fs.promises.writeFile(this.nameFile, JSON.stringify(carritos,null,2));
+            }
+        } catch {
+            console.log("No se pudo agregar el producto al carrito");
+        }
+    }
 }
 
 module.exports = {Carrito}
