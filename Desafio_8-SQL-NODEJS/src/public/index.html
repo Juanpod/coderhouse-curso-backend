@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desafio 6 - Websockets</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+    <section id="form-container">
+        <form id="productForm">
+            <label>Titulo</label>
+            <input type="text" id="title" name="title" required>
+            <label>Precio</label>
+            <input type="number" id="price" name="price" required>
+            <label>Url</label>
+            <input type="url" id="thumbnail" name="thumbnail" required>
+            <button id="submit" type="submit">Agregar producto</button>
+        </form>
+    </section>
+    <section id="productsContainer"></section> 
+    <section id="chat-container">
+        <h2>Chat</h2>
+        <div id="chat-windows">
+            <div id="history"></div>
+            <div id="status"></div>
+        </div>
+        <input type="text" id="user" placeholder="Usuario">
+        <input type="text" id="message" placeholder="Mensajes">
+        <button id="send">Enviar</button>
+    </section>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js" integrity="sha512-RNLkV3d+aLtfcpEyFG8jRbnWHxUqVZozacROI4J2F1sTaDqo1dPQYs01OMi1t1w9Y2FdbSCDSQ2ZVdAC8bzgAg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="index.js"></script>
+</body>
+</html>
