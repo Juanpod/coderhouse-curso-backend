@@ -5,6 +5,10 @@ const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// opciones de la base de datos
+
+const options = require("./config/dbConfig");
+
 //static files
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -23,8 +27,11 @@ const {HistorialChat} = require("./managers/chatClass.js");
 const historial = new HistorialChat("historial.json");
 
 //Productos
-const {Contenedor} = require("./managers/productsClass");
-const productos = new Contenedor("productos.json");
+//const {Contenedor} = require("./managers/productsClass");
+const ContenedorMysql = require("./managers/productsMysql");
+//const productos = new Contenedor("productos.json");
+const productos = new ContenedorMysql(options.mariaDB, "products");
+
 //Websockets
 io.on("connection", async(socket) => {
     console.log("nuevo usuario conectado", socket.id);
