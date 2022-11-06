@@ -22,15 +22,14 @@ const SocketIO = require('socket.io');
 const io = SocketIO(server);
 
 
+const ContenedorSql = require("./managers/contenedorSql");
+
 //Historial de chat
-const {HistorialChat} = require("./managers/chatClass.js");
-const historial = new HistorialChat("historial.json");
+
+const historial = new ContenedorSql(options.sqliteDB, "chat");
 
 //Productos
-//const {Contenedor} = require("./managers/productsClass");
-const ContenedorMysql = require("./managers/productsMysql");
-//const productos = new Contenedor("productos.json");
-const productos = new ContenedorMysql(options.mariaDB, "products");
+const productos = new ContenedorSql(options.mariaDB, "products");
 
 //Websockets
 io.on("connection", async(socket) => {
@@ -38,14 +37,14 @@ io.on("connection", async(socket) => {
     // -------------- chat ----------------
 
     //Envia el historial de chat a los nuevos usuarios
-    socket.emit("historico",await historial.getAllMessages());
+    socket.emit("historico",await historial.getAll());
 
     // Recibe nuevos mensaje y envia historial al resto de usuario
     socket.on('mensaje-chat', async(data) =>{
         console.log(data);
-        await historial.addMessage(data);
+        await historial.save(data);
         let historicoMensajes;
-        historicoMensajes = await historial.getAllMessages();
+        historicoMensajes = await historial.getAll();
         io.sockets.emit('historico',historicoMensajes);
     })
     

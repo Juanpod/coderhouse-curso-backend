@@ -1,6 +1,6 @@
 const knex = require("knex");
 
-class ContenedorMysql{
+class ContenedorSql{
     constructor(options, tableName){
         this.database = knex(options);
         this.tableName = tableName;
@@ -9,22 +9,22 @@ class ContenedorMysql{
         try{
             //select * from products
             const data = await this.database.from(this.tableName).select("*");
-            const products = data.map(elm=>({...elm}))
+            const results = data.map(elm=>({...elm}))
             //console.log("Datos",products);
-            return products;
+            return results;
         } catch (error) {
             return `hubo un error ${error}`
         }
         
     }
-    async save(product) {
+    async save(data) {
         try{
-            const [productId] = await this.database.from(this.tableName).insert(product);
-            return `Nuevo producto guardado con el id: ${productId}`;
+            const [id] = await this.database.from(this.tableName).insert(data);
+            return `Nuevo elemento guardado con el id: ${id}`;
         } catch (error) {
             return `hubo un error ${error}`
         }
     }
 }
 
-module.exports = ContenedorMysql;
+module.exports = ContenedorSql;

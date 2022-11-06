@@ -16,6 +16,7 @@ let sendbtn = document.getElementById("send"); //Obtiene el boton de enviar
 sendbtn.addEventListener('click', ()=>{
     socket.emit('mensaje-chat',{
         username:user.value,
+        timestamp: new Date().toLocaleString(),
         message:message.value
     })
     console.log({
@@ -40,7 +41,7 @@ socket.on('historico', (data)=>{
     action.innerHTML = "";
     let elementos="";
     data.forEach(item => {
-        elementos = elementos + `<p><strong>${item.username}</strong>: ${item.message}</p>`;
+        elementos = elementos + `<p><strong>${item.timestamp} - ${item.username}</strong>: ${item.message}</p>`;
     });
     history.innerHTML = elementos;
 })
