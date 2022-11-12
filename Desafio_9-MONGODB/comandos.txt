@@ -1,0 +1,41 @@
+use ecommerce
+db.productos.insert({title: 'Pepsi', price: 120, thumbnail: "www"})
+db.productos.insert({title: 'Agua', price: 580, thumbnail: "www"})
+db.productos.insert({title: 'Jugo', price: 900, thumbnail: "www"})
+db.productos.insert({title: 'Televisor', price: 1280, thumbnail: "www"})
+db.productos.insert({title: 'Celular', price: 1700, thumbnail: "www"})
+db.productos.insert({title: 'Cafe', price: 2300, thumbnail: "www"})
+db.productos.insert({title: 'Polera', price: 2860, thumbnail: "www"})
+db.productos.insert({title: 'Libro', price: 3350, thumbnail: "www"})
+db.productos.insert({title: 'Patines', price: 4320, thumbnail: "www"})
+
+db.mensajes.insert({username: 'Juan', message: "Hola como estas?"})
+db.mensajes.insert({username: 'Laura', message: "Bien y tu?"})
+db.mensajes.insert({username: 'Marco', message: "Hola a todos"})
+db.mensajes.insert({username: 'Juan', message: "Empezamos la tarea?"})
+db.mensajes.insert({username: 'Laura', message: "Sii"})
+db.mensajes.insert({username: 'Marco', message: "Oka, me parece bien"})
+db.mensajes.insert({username: 'Juan', message: "Antes de empezar, como pasaron el fin de semana"})
+db.mensajes.insert({username: 'Laura', message: "Pues dormir y comer"})
+db.mensajes.insert({username: 'Juan', message: "ohhh"})
+db.mensajes.insert({username: 'Marco', message: "Muy bien, estudiando"})
+
+db.productos.find()
+db.mensajes.find()
+
+db.productos.find().pretty()
+db.mensajes.find().pretty()
+
+db.productos.insertOne({title: 'Jeans', price: 600, thumbnail: "www"})
+
+db.productos.find({title: 'Agua'})
+
+db.productos.find({price: {$lt:1000}})
+db.productos.find({$and:[{price:{$lte:3000}},{price:{$gte:1000}}]})
+db.productos.find({price: {$gt:3000}})
+db.productos.find({},{"title":1}).skip(2).limit(1).sort({price:1})
+
+db.productos.updateMany({},{$set:{"stock":100}},{upsert:true})
+db.productos.updateMany({price: {$gt:4000}},{$set:{"stock":0}})
+
+db.productos.deleteMany({price: {$lt:1000}})
