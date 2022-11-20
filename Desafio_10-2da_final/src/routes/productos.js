@@ -3,11 +3,14 @@ const routerProductos = express.Router();
 
 const {Contenedor} = require('../managers/ProductoContenedorArchivo.js');
 
-const productos = new Contenedor("productos.json");
+//const productos = new Contenedor("productos.json");
 
+// Prueba con contenedor mongo
 const {ContenedorMongoDb} = require('../managers/ContenedorMongoDb.js');
 const URL ="mongodb://127.0.0.1/tienda";
-const productos2 = new ContenedorMongoDb(URL, "modelo");
+const productos = new ContenedorMongoDb(URL, "modelo");
+//-----
+
 
 const admin = true;
 
@@ -65,8 +68,8 @@ routerProductos.put("/:id", async(req,res)=>{
         try{
             const id = req.params.id;
             const newUpdate = req.body;
-            const actualizados = await productos.updateById(JSON.parse(id),newUpdate);
-            if(actualizados == false){
+            const actualizados = await productos.updateById(id,newUpdate);
+            if(actualizados.matchedCount == 0){
                 res.json({
                     error:"No se encuentra el id"
                 })
@@ -78,6 +81,7 @@ routerProductos.put("/:id", async(req,res)=>{
             }
     
         } catch (error){
+            console.log(error);
             res.status(500).send("hubo un error en el servidor")
         }
     } else {
