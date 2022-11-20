@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const {productsModel} = require('../models/productsModel.js');
+
 
 class ContenedorMongoDb {
     constructor(URL, model){
@@ -15,8 +15,8 @@ class ContenedorMongoDb {
 
     async save(object){
         try{
-            await productsModel.create(object);
-            console.log("Guardado con exito")
+            await this.model.create(object);
+            
         
         } catch (error) {
         console.log(error);
@@ -26,7 +26,7 @@ class ContenedorMongoDb {
 
     async updateById(id, body){
         try {
-            const result = await productsModel.updateOne(
+            const result = await this.model.updateOne(
                 {_id:id},
                 {$set:{
                     nombre:body.nombre,
@@ -45,7 +45,7 @@ class ContenedorMongoDb {
 
     async getById(id){
         try{
-            const result = await productsModel.find({_id:id},{__v:0});
+            const result = await this.model.find({_id:id},{__v:0});
             return result;
 
         } catch (error) {
@@ -55,7 +55,7 @@ class ContenedorMongoDb {
 
     async getAll(){
         try{
-            const result = await productsModel.find({},{__v:0});
+            const result = await this.model.find({},{__v:0});
             return result;
         } catch (error) {
         }
@@ -63,12 +63,30 @@ class ContenedorMongoDb {
 
     async deleteById(id) {
         try {
-            const result = await productsModel.deleteOne({_id:id})
+            const result = await this.model.deleteOne({_id:id});
             return result;
         } catch(error) {
             console.log(error);
         }
     }
+
+    async deleteAll() {
+        try {
+            const result = await this.model.deleteMany({});
+            return result;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async crearCarrito(){
+        try{
+            console.log("crear carrito");
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
 }
 
 module.exports = {ContenedorMongoDb};

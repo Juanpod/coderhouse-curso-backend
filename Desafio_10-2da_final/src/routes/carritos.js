@@ -1,13 +1,23 @@
 const express = require('express');
 const routerCarritos = express.Router();
 
-const {Carrito} = require('../managers/CarritoContenedorArchivo.js');
+//const {Carrito} = require('../managers/CarritoContenedorArchivo.js');
 
-const carrito = new Carrito("carritos.json");
+//const carrito = new Carrito("carritos.json");
 
-const {Contenedor} = require('../managers/ProductoContenedorArchivo.js');
+//const {Contenedor} = require('../managers/ProductoContenedorArchivo.js');
 
-const productos = new Contenedor("productos.json");
+const {productsModel} = require('../models/productsModel.js');
+const {carritosModel} = require('../models/carritosModel.js');
+
+//const productos = new Contenedor("productos.json");
+
+const {ContenedorMongoDb} = require('../managers/ContenedorMongoDb.js');
+const URL ="mongodb://127.0.0.1/tienda";
+const productos = new ContenedorMongoDb(URL, productsModel);
+const carrito = new ContenedorMongoDb(URL, carritosModel )
+
+
 
 routerCarritos.post("/", async(req,res)=>{
         try{

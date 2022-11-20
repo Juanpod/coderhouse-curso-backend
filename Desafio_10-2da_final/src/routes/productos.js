@@ -1,6 +1,8 @@
 const express = require('express');
 const routerProductos = express.Router();
 
+const {productsModel} = require('../models/productsModel.js');
+
 const {Contenedor} = require('../managers/ProductoContenedorArchivo.js');
 
 //const productos = new Contenedor("productos.json");
@@ -8,7 +10,7 @@ const {Contenedor} = require('../managers/ProductoContenedorArchivo.js');
 // Prueba con contenedor mongo
 const {ContenedorMongoDb} = require('../managers/ContenedorMongoDb.js');
 const URL ="mongodb://127.0.0.1/tienda";
-const productos = new ContenedorMongoDb(URL, "modelo");
+const productos = new ContenedorMongoDb(URL, productsModel );
 //-----
 
 
@@ -17,8 +19,16 @@ const admin = true;
 routerProductos.get("/", async(req,res)=>{
     try{
         const listaProductos = await productos.getAll();
-        console.log(listaProductos);
-        res.json(listaProductos);
+        if(listaProductos.length == 0){
+            console.log("No hay productos");
+            res.json({
+                mensaje: "No hay productos"
+            });
+        } else {
+            console.log(listaProductos);
+            res.json(listaProductos);
+        }
+        
     } catch (error){
         res.status(500).send("error en el servidor")
     }
@@ -28,7 +38,7 @@ routerProductos.get("/:id", async(req,res)=>{
     try{
         const id = req.params.id;
         const producto = await productos.getById(id);
-        if (producto == []){
+        if (producto.length != 0){
             console.log(producto)
             res.json(producto)
         } else {
@@ -51,6 +61,7 @@ routerProductos.post("/", async(req,res)=>{
                 mensaje:"producto guardado",
                 producto: req.body
             })
+            console.log("Guardado con exito")
     
         } catch (error){
             res.status(500).send("hubo un error en el servidor")
@@ -121,6 +132,18 @@ routerProductos.delete("/:id", async(req,res)=>{
         })
     }
     
+})
+
+routerProductos.delete("/", async(req,res)=>{
+    try{
+        let result = await productos.deleteAll();
+        console.log(result);
+        res.json({
+            Mensaje: "Todos los productos fueron borrados"
+        });
+    } catch (error){
+        res.status(500).send("error en el servidor")
+    }
 })
 
 module.exports = routerProductos;
