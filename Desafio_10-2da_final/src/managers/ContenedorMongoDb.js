@@ -42,6 +42,16 @@ class ContenedorMongoDb {
             console.log(error);
         }
     }
+
+    async getById(id){
+        try{
+            const result = await productsModel.find({_id:id},{__v:0});
+            return result;
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
 }
 
 module.exports = {ContenedorMongoDb};

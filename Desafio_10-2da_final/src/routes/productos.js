@@ -28,13 +28,14 @@ routerProductos.get("/:id", async(req,res)=>{
     try{
         const id = req.params.id;
         const producto = await productos.getById(id);
-        if (producto){
+        if (producto == []){
             console.log(producto)
             res.json(producto)
         } else {
             res.json({
                 error:"producto no encontrado"
             })
+            console.log("Producto no encontrado")
         }
     } catch (error){
         res.status(500).send("hubo un error en el servidor")
@@ -76,7 +77,7 @@ routerProductos.put("/:id", async(req,res)=>{
             } else {
                 res.json({
                     message:`El producto con el id ${id} fue actualizado`,
-                    response: actualizados
+                    response: newUpdate
                 })
             }
     
