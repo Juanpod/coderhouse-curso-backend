@@ -20,8 +20,9 @@ app.use(express.urlencoded({extended:true}));
 
 
 //Middleware para que el servidor use router al llegar a /
-app.use('/api/productos', routerProdutos);
+
 app.use('/api/carrito', routerCarritos);
+app.use('/api/productos', routerProdutos);
 
 //express server
 app.listen(PORT,()=>{

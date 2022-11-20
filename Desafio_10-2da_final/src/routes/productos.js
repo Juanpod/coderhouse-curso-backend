@@ -10,7 +10,7 @@ const {Contenedor} = require('../managers/ProductoContenedorArchivo.js');
 // Prueba con contenedor mongo
 const {ContenedorMongoDb} = require('../managers/ContenedorMongoDb.js');
 const URL ="mongodb://127.0.0.1/tienda";
-const productos = new ContenedorMongoDb(URL, productsModel );
+const productos = new ContenedorMongoDb(URL, productsModel);
 //-----
 
 

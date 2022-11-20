@@ -11,6 +11,7 @@ class ContenedorMongoDb {
             if(error) throw new Error(`Conexion fallida ${error}`);
             console.log("conexion base de datos exitosa!")
         })
+        console.log(this.model)
     }
 
     async save(object){
