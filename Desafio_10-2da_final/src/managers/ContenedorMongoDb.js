@@ -60,6 +60,15 @@ class ContenedorMongoDb {
         } catch (error) {
         }
     }
+
+    async deleteById(id) {
+        try {
+            const result = await productsModel.deleteOne({_id:id})
+            return result;
+        } catch(error) {
+            console.log(error);
+        }
+    }
 }
 
 module.exports = {ContenedorMongoDb};

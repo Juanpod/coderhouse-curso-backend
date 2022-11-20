@@ -98,16 +98,17 @@ routerProductos.delete("/:id", async(req,res)=>{
     if(admin){
         try{
             const id = req.params.id;
-            let producto = await productos.getById(id);
-            if(producto){
-                await productos.deleteById(id);
+            let result = await productos.deleteById(id);
+            if(result.deletedCount == 1){
                 res.json({
                     Mensaje:`Producto con el id ${id} fue borrado`
                 })
+                console.log(`Producto con el id ${id} fue borrado`);
             } else {
                 res.json({
                     error:`Producto con el id ${id} no fue encontrado`
                 })
+                console.log(`Producto con el id ${id} no fue encontrado`);
             }
             
         } catch (error){
