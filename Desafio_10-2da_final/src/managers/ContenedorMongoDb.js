@@ -82,6 +82,8 @@ class ContenedorMongoDb {
     async crearCarrito(){
         try{
             console.log("crear carrito");
+            const result = await this.model.create({productos:[]});
+            return result._id;
         } catch (error) {
             console.log(error);
         }
