@@ -52,6 +52,14 @@ class ContenedorMongoDb {
             console.log(error);
         }
     }
+
+    async getAll(){
+        try{
+            const result = await productsModel.find({},{__v:0});
+            return result;
+        } catch (error) {
+        }
+    }
 }
 
 module.exports = {ContenedorMongoDb};
