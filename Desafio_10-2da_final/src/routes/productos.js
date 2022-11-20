@@ -81,7 +81,7 @@ routerProductos.put("/:id", async(req,res)=>{
             const id = req.params.id;
             const newUpdate = req.body;
             const actualizados = await productos.updateById(id,newUpdate);
-            if(actualizados.matchedCount == 0){
+            if(!actualizados){
                 res.json({
                     error:"No se encuentra el id"
                 })
@@ -110,7 +110,7 @@ routerProductos.delete("/:id", async(req,res)=>{
         try{
             const id = req.params.id;
             let result = await productos.deleteById(id);
-            if(result.deletedCount == 1){
+            if(result){
                 res.json({
                     Mensaje:`Producto con el id ${id} fue borrado`
                 })

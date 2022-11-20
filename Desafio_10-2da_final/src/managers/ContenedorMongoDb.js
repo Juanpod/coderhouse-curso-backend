@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+const { carritosModel } = require("../models/carritosModel");
+const { productsModel } = require("../models/productsModel");
 
 
 class ContenedorMongoDb {
@@ -37,7 +39,10 @@ class ContenedorMongoDb {
                     stock:body.stock,
                     imagen:body.imagen
                 }});
-            return result;
+            if(result.matchedCount == 0){
+                return false;
+            }
+            return true;
             
         } catch (error){
             console.log(error);
@@ -47,6 +52,9 @@ class ContenedorMongoDb {
     async getById(id){
         try{
             const result = await this.model.find({_id:id},{__v:0});
+            if(this.model == carritosModel){
+                return result[0].productos;
+            }
             return result;
 
         } catch (error) {
@@ -65,7 +73,10 @@ class ContenedorMongoDb {
     async deleteById(id) {
         try {
             const result = await this.model.deleteOne({_id:id});
-            return result;
+            if(result.deletedCount == 1){
+                return true;
+            }
+            return false;
         } catch(error) {
             console.log(error);
         }
@@ -86,6 +97,18 @@ class ContenedorMongoDb {
             const result = await this.model.create({productos:[]});
             return result._id;
         } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async borrarCarrito(id) {
+        try {
+            const result = await this.model.deleteOne({_id:id});
+            if(result.deletedCount == 1){
+                return true;
+            }
+            return false;
+        } catch(error) {
             console.log(error);
         }
     }
