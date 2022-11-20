@@ -1,0 +1,42 @@
+[
+  {
+    "nombre": "Red Bull",
+    "descripcion": "Te da alas",
+    "precio": 250,
+    "codigo": "RBTAL",
+    "stock": 20,
+    "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9U9vK-3cM3xqWyWXgkjyFckJBRmtT-5al-Q&usqp=CAU",
+    "timestamp": 1667332405046,
+    "id": 1
+  },
+  {
+    "nombre": "Cocacola",
+    "descripcion": "Bebida cola",
+    "precio": 250,
+    "codigo": "CC500",
+    "stock": 25,
+    "imagen": "https://xmayor.cl/wp-content/uploads/2021/06/COCA-COLA-ORIGINAL-350CC-LATA.jpg",
+    "timestamp": 1667332581306,
+    "id": 2
+  },
+  {
+    "nombre": "Pepsi",
+    "descripcion": "Bebida cola",
+    "precio": 250,
+    "codigo": "PEP500",
+    "stock": 30,
+    "imagen": "https://mercadolavega.cl/wp-content/uploads/2021/08/Bebida-Pepsi-lata-351.jpg",
+    "timestamp": 1667332618625,
+    "id": 3
+  },
+  {
+    "nombre": "Fanta",
+    "descripcion": "Bebida naranja",
+    "precio": 250,
+    "codigo": "FANT500",
+    "stock": 10,
+    "imagen": "https://i0.wp.com/www.distribuidorasantiago.cl/wp-content/uploads/2019/05/124-BEBIDA-FANTA-LATA.jpg?fit=1200%2C1200&ssl=1",
+    "timestamp": 1667332653757,
+    "id": 4
+  }
+]

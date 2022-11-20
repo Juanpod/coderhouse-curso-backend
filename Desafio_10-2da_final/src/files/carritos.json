@@ -1,0 +1,38 @@
+[
+  {
+    "id": 2,
+    "timestamp": 1667337820870,
+    "productos": [
+      {
+        "nombre": "Pepsi",
+        "descripcion": "Bebida cola",
+        "precio": 250,
+        "codigo": "PEP500",
+        "stock": 30,
+        "imagen": "https://mercadolavega.cl/wp-content/uploads/2021/08/Bebida-Pepsi-lata-351.jpg",
+        "timestamp": 1667332618625,
+        "id": 3
+      },
+      {
+        "nombre": "Cocacola",
+        "descripcion": "Bebida cola",
+        "precio": 250,
+        "codigo": "CC500",
+        "stock": 25,
+        "imagen": "https://xmayor.cl/wp-content/uploads/2021/06/COCA-COLA-ORIGINAL-350CC-LATA.jpg",
+        "timestamp": 1667332581306,
+        "id": 2
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "timestamp": 1667338663287,
+    "productos": []
+  },
+  {
+    "id": 4,
+    "timestamp": 1667338663287,
+    "productos": []
+  }
+]
