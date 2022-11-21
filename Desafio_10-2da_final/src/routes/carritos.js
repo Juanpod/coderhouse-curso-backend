@@ -76,6 +76,7 @@ routerCarritos.post("/:id/productos/:id_prod", async (req,res) => {
         let idProduct = req.params.id_prod;
         const newProduct = await productos.getById(idProduct);
         const existCart = await carrito.getById(id);
+        
         if(existCart){
             if(newProduct){
                 await carrito.addProduct(id,newProduct);
@@ -87,6 +88,7 @@ routerCarritos.post("/:id/productos/:id_prod", async (req,res) => {
                 res.json({
                     mensaje: "no se encuentra el producto"
                 }) 
+                console.log("No se encuentra el producto");
             }
         } else {
             res.json({
@@ -102,8 +104,8 @@ routerCarritos.post("/:id/productos/:id_prod", async (req,res) => {
 
 routerCarritos.delete("/:id/productos/:id_prod", async (req,res) => {
     try {
-        let id = parseInt(req.params.id);
-        let idProduct = parseInt(req.params.id_prod);
+        let id = req.params.id;
+        let idProduct = req.params.id_prod;
         const productId = await productos.getById(idProduct);
         const existCart = await carrito.getById(id);
         if(existCart){

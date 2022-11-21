@@ -56,7 +56,6 @@ class ContenedorMongoDb {
                 return false;
             }
             if(this.model == carritosModel){
-                console.log(result);
                 return result[0].productos;
             }
             
@@ -121,6 +120,7 @@ class ContenedorMongoDb {
 
     async addProduct(id, newProduct){
         try {
+            
             const products = await this.getById(id);
             products.push(newProduct[0]);
             const result = await this.model.updateOne(
@@ -133,6 +133,23 @@ class ContenedorMongoDb {
             }
             return true;
         }catch(error){
+            console.log(error);
+        }
+    }
+
+    async deleteProduct(id, idProduct) {
+        try {
+            const products = await this.getById(id);
+            const index = products.findIndex(elm=>elm.id === idProduct);
+            console.log(index);
+            products.splice(index,1);
+            await this.model.updateOne(
+                {_id:id},
+                {$set:{
+                    productos:products
+                }});
+            
+        } catch (error) {
             console.log(error);
         }
     }
