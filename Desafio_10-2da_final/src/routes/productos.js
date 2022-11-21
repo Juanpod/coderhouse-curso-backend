@@ -38,7 +38,7 @@ routerProductos.get("/:id", async(req,res)=>{
     try{
         const id = req.params.id;
         const producto = await productos.getById(id);
-        if (producto.length != 0){
+        if (producto){
             console.log(producto)
             res.json(producto)
         } else {

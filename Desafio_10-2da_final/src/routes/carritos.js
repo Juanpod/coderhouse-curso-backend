@@ -72,7 +72,7 @@ routerCarritos.get("/:id/productos", async (req,res) => {
 
 routerCarritos.post("/:id/productos/:id_prod", async (req,res) => {
     try {
-        let id = parseInt(req.params.id);
+        let id = req.params.id;
         let idProduct = req.params.id_prod;
         const newProduct = await productos.getById(idProduct);
         const existCart = await carrito.getById(id);
@@ -81,7 +81,8 @@ routerCarritos.post("/:id/productos/:id_prod", async (req,res) => {
                 await carrito.addProduct(id,newProduct);
                 res.json({
                     mensaje: "exito"
-                }) 
+                })
+                console.log("Producto agregado") 
             } else {
                 res.json({
                     mensaje: "no se encuentra el producto"

@@ -52,10 +52,16 @@ class ContenedorMongoDb {
     async getById(id){
         try{
             const result = await this.model.find({_id:id},{__v:0});
+            if(result.length == 0){
+                return false;
+            }
             if(this.model == carritosModel){
+                console.log(result);
                 return result[0].productos;
             }
+            
             return result;
+            
 
         } catch (error) {
             console.log(error);
@@ -109,6 +115,24 @@ class ContenedorMongoDb {
             }
             return false;
         } catch(error) {
+            console.log(error);
+        }
+    }
+
+    async addProduct(id, newProduct){
+        try {
+            const products = await this.getById(id);
+            products.push(newProduct[0]);
+            const result = await this.model.updateOne(
+                {_id:id},
+                {$set:{
+                    productos:products
+                }});
+            if(result.matchedCount == 0){
+                return false;
+            }
+            return true;
+        }catch(error){
             console.log(error);
         }
     }
