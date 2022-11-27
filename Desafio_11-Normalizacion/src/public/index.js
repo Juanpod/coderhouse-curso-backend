@@ -8,12 +8,27 @@ const socket = io();
 // }
 
 
+//esquemas del lado del front
+
+const authorSchema = new normalizr.schema.Entity("autores", {} )
+
+const messageSchema = new normalizr.schema.Entity("mensajes",{
+    author:authorSchema},
+    {idAttribute:"timestamp"});
+
+const chatSchema = new normalizr.schema.Entity("chat", {
+    messages: [messageSchema]
+}, {idAttribute:"id"});
+
+
 //-------------------chat -------------------
-let user = document.getElementById("user"); //Obtiene el usuario 
-let message = document.getElementById("message"); //Obtiene el mensaje
+// let user = document.getElementById("nombre"); //Obtiene el usuario 
+// let message = document.getElementById("message"); //Obtiene el mensaje
 let sendbtn = document.getElementById("send"); //Obtiene el boton de enviar
 //Escucha el evento click para emitir el mensaje-chat con un objeto que contiene usuario y mensaje
 sendbtn.addEventListener('click', ()=>{
+    // let user = document.getElementById("nombre"); //Obtiene el usuario 
+    // console.log("el usuario es ", user.value)
     socket.emit('mensaje-chat',{
         author: {
             id: mail.value,
@@ -52,12 +67,17 @@ socket.on('typing', (data)=>{
     action.innerHTML = `<p>${data} is typing</p>`
 })
 
+
+
+
 //Recibe los mensajes anteriores y nuevos mensajes enviados al servidor desde otro cliente.
 let history = document.getElementById("history");
 socket.on('historico', (data)=>{
+    //desnormalizar
+    const normalData = normalizr.denormalize(data.result, chatSchema, data.entities);
     action.innerHTML = "";
     let elementos="";
-    data.forEach(item => {
+    normalData.messages.forEach(item => {
         elementos = elementos + `<p><strong>${item.timestamp} - ${item.author.nombre}</strong>: ${item.message}</p>`;
     });
     history.innerHTML = elementos;

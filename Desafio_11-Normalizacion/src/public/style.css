@@ -2,8 +2,14 @@ body {
     font-family: 'Roboto Mono', monospace;
 }
 
+.flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
 #chat-container, #form-container, #productsContainer {
-    max-width: 600px;
+    max-width: 800px;
     margin: 30px auto;
     border: 1px solid #ddd;
     box-shadow: 1px 3px 5px rgba((0), 0, 0, .5);

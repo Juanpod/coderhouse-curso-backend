@@ -23,13 +23,16 @@
         </form>
     </section>
     <section id="productsContainer"></section> 
-    <section id="chat-container">
-        <h2>Chat</h2>
+    <section class="flex" id="chat-container">
+        <div>
+            <h2>Chat</h2>
         <div id="chat-windows">
             <div id="history"></div>
             <div id="status"></div>
         </div>
+        </div>
         
+        <div>
         <input type="text" id="mail" placeholder="Correo">
         <input type="text" id="nombre" placeholder="Nombre">
         <input type="text" id="lastName" placeholder="Apellido">
@@ -38,10 +41,14 @@
         <input type="text" id="avatar" placeholder="Foto de perfil">
         <input type="text" id="message" placeholder="Mensajes">
         <button id="send">Enviar</button>
+        </div>
+        
         
     </section>
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js" integrity="sha512-RNLkV3d+aLtfcpEyFG8jRbnWHxUqVZozacROI4J2F1sTaDqo1dPQYs01OMi1t1w9Y2FdbSCDSQ2ZVdAC8bzgAg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/normalizr@3.6.1/dist/normalizr.browser.min.js"></script>
     <script src="index.js"></script>
+    
 </body>
 </html>
