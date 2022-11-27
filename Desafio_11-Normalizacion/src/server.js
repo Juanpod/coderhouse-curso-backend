@@ -5,6 +5,9 @@ const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+const { faker } = require('@faker-js/faker');
+faker.locale = "es";
+
 // Importar normalizr
 const {normalize, schema} = require("normalizr");
 
@@ -106,5 +109,22 @@ io.on("connection", async(socket) => {
         await productos.save(data);
         io.sockets.emit('productList', await productos.getAll());
     })
+})
+
+
+app.get("/api/productos-test",(req,res)=>{
+    let arrayProducts=[];
+    for(let i=0;i<5;i++){
+        arrayProducts.push(
+            {
+                title: faker.commerce.product(),
+                price: faker.commerce.price(1,20000),
+                thumbnail: faker.image.avatar(),
+                id: faker.datatype.uuid()
+            }
+        )
+    }
+    console.log(arrayProducts);
+    res.send(arrayProducts);
 })
 
