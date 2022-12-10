@@ -1,0 +1,14 @@
+[
+  {
+    "title": "Cocacola",
+    "price": "250",
+    "thumbnail": "https://cdn-icons-png.flaticon.com/512/1554/1554591.png",
+    "id": 1
+  },
+  {
+    "title": "Pepsi",
+    "price": "150",
+    "thumbnail": "https://cdn-icons-png.flaticon.com/512/1554/1554591.png",
+    "id": 2
+  }
+]
