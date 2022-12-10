@@ -15,17 +15,68 @@ const {normalize, schema} = require("normalizr");
 app.use(express.static(path.join(__dirname, 'public')));
 
 // agregado 
+
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
+app.use(cookieParser());
+
+
 //configuracion template engine handlebars
 app.engine('handlebars', handlebars.engine());
 app.set('views', __dirname+'/views');
 app.set('view engine', 'handlebars');
 
+app.use(session({
+    store: MongoStore.create({
+        mongoUrl: "mongodb+srv://juanpod:coder@coderdata.jzdt2lh.mongodb.net/desafio12?retryWrites=true&w=majority"
+    }),
+    secret:"secretoDeEstado",
+    resave:false,
+    saveUninitialized: false,
+    cookie:{
+        maxAge:2000000
+    }
+}));
 
 // routes
 //view routes
-app.get('/', async(req,res)=>{
-    res.render('home')
+
+const checkUserLogged = (req,res,next)=>{
+    if(req.session.username){
+        next();
+    } else{
+        res.redirect("/login");
+    }
+}
+app.get('/',checkUserLogged, (req,res)=>{
+    console.log(req.session);
+    user = req.session.username;
+    res.render('home',{username : user})
 })
+
+app.get("/login",(req,res)=>{
+    const {user} = req.query;
+    if(req.session.username){
+        return res.redirect("/")
+    } else{
+        if(user){
+            req.session.username = user;
+            return res.redirect("/");
+        } else{
+            res.render("login");
+        }
+    }
+});
+
+
+app.get("/logout",(req,res)=>{
+    user = req.session.username;
+    console.log(user);
+    req.session.destroy();
+    res.render('logout',{username : user});
+});
+
 
 
 //fin agregado
