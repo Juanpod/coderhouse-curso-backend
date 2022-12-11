@@ -1,0 +1,26 @@
+[
+  {
+    "title": "Cocacola",
+    "price": "250",
+    "thumbnail": "https://cdn-icons-png.flaticon.com/512/1554/1554591.png",
+    "id": 1
+  },
+  {
+    "title": "Pepsi",
+    "price": "150",
+    "thumbnail": "https://cdn-icons-png.flaticon.com/512/1554/1554591.png",
+    "id": 2
+  },
+  {
+    "title": "Fanta",
+    "price": "200",
+    "thumbnail": "https://tofuu.getjusto.com/orioneat-prod/33MaLZy7aZWwBXA7G-COCA%20350CC.jpg",
+    "id": 3
+  },
+  {
+    "title": "7up",
+    "price": "300",
+    "thumbnail": "https://arturocalle.vtexassets.com/arquivos/ids/473103/HOMBRE-CAMISA-10122546-AZUL-780_1.jpg?v=637950736212900000/",
+    "id": 4
+  }
+]
