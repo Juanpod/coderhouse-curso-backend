@@ -117,21 +117,22 @@ function isValidPassword (user, password) {
 }
 
 passport.use('loginStrategy', new LocalStrategy(
+    {
+        usernameField: "email"
+    },
     (username, password, done) => {
         UserModel.findOne({username:username},(error,user)=>{
-            if(error) return done(error);
+            if(error) {
+                return done(error,null,{message:"Hubo un error"});
+            }
             if(!user) {
-                console.log("Usuario no encontrado")
-                return done(null,false);
+                return done(null,false,{message:"El usuario no existe"});
             }
 
             if(!isValidPassword(user, password)) {
-                console.log("Clave invalida");
-                return done(null,false);
+                return done(null,false,{message:"Clave invalida"});
             }
             return done(null, user);
-            
-
         })
     }
 ))
@@ -139,13 +140,6 @@ passport.use('loginStrategy', new LocalStrategy(
 // routes
 //view routes
 
-// const checkUserLogged = (req,res,next)=>{
-//     if(req.session.username){
-//         next();
-//     } else{
-//         res.redirect("/login");
-//     }
-// }
 
 app.get('/', (req,res)=>{
     if(req.isAuthenticated()){
@@ -161,12 +155,13 @@ app.get("/registro", (req,res)=>{
     if(req.session.username){
         return res.redirect("/");
     } else {
-        res.render('signup');
+        res.render('signup',{error:errorMessage});
     }
     req.session.messages = [];
 })
 
 app.get("/login",(req,res)=>{
+    const errorMessage = req.session.messages ? req.session.messages[0] : '';
     const {user} = req.query;
     if(req.session.username){
         return res.redirect("/")
@@ -175,9 +170,10 @@ app.get("/login",(req,res)=>{
             req.session.username = user;
             return res.redirect("/");
         } else{
-            res.render("login");
+            res.render("login",{error:errorMessage});
         }
     }
+    req.session.messages = [];
 });
 
 app.get("/logout",(req,res)=>{
@@ -201,7 +197,7 @@ app.post("/signup",passport.authenticate("signupStrategy",{
 //ruta de autenticacion login
 
 app.post("/login",passport.authenticate("loginStrategy",{
-    failureRedirect:"/registro",
+    failureRedirect:"/login",
     failureMessage: true
 }),(req,res)=>{
     const user = req.body.email;
@@ -209,23 +205,7 @@ app.post("/login",passport.authenticate("loginStrategy",{
     res.redirect("/")
 });
 
-// app.post("/login",(req,res)=>{
-//     const user = req.body;
-//     console.log(req.body);
-//     //el usuario existe
-//     const userExists = user.find(elm=>elm.email === user.email);
-//     if(userExists){
-//         //validar la contrase;a
-//         if(userExists.password === user.password){
-//             req.session.user = user;
-//             res.redirect("/perfil")
-//         } else{
-//             res.redirect("/inicio-sesion")
-//         }
-//     } else{
-//         res.redirect("/registro");
-//     }
-// });
+
 
 //fin agregado
 
