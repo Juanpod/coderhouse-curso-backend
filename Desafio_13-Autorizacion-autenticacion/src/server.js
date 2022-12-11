@@ -144,7 +144,10 @@ passport.use('loginStrategy', new LocalStrategy(
 app.get('/', (req,res)=>{
     if(req.isAuthenticated()){
         console.log(req.session.username);
-        user = req.session.username;
+        const user = {
+            name : req.session.name,
+            email : req.session.username
+        }
         res.render('home',{username : user})
     } else{
         res.send("<div>Debes <a href='/login'>inciar sesion</a> o <a href='/registro'>registrarte</a></div>")
@@ -162,7 +165,8 @@ app.get("/registro", (req,res)=>{
 
 app.get("/login",(req,res)=>{
     const errorMessage = req.session.messages ? req.session.messages[0] : '';
-    const {user} = req.query;
+    // const {user} = req.query;
+    let user;
     if(req.session.username){
         return res.redirect("/")
     } else{
@@ -201,7 +205,9 @@ app.post("/signup",passport.authenticate("signupStrategy",{
     failureMessage: true
 }),(req,res)=>{
     const user = req.body.email;
+    const nombre = req.body.name;
     req.session.username = user;
+    req.session.name = nombre;
     res.redirect("/")
 });
 
@@ -212,7 +218,9 @@ app.post("/login",passport.authenticate("loginStrategy",{
     failureMessage: true
 }),(req,res)=>{
     const user = req.body.email;
+    const nombre = req.body.name;
     req.session.username = user;
+    req.session.name = nombre;
     res.redirect("/")
 });
 
