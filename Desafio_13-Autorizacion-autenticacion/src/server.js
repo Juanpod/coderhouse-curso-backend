@@ -176,6 +176,17 @@ app.get("/login",(req,res)=>{
     req.session.messages = [];
 });
 
+app.get("/failLogin", (req,res)=>{
+    const errorMessage = req.session.messages ? req.session.messages[0] : '';
+    res.render("failLogin",{error:errorMessage})
+    req.session.messages = [];
+})
+app.get("/failRegistro", (req,res)=>{
+    const errorMessage = req.session.messages ? req.session.messages[0] : '';
+    res.render("failRegistro",{error:errorMessage})
+    req.session.messages = [];
+})
+
 app.get("/logout",(req,res)=>{
     user = req.session.username;
     console.log(user);
@@ -186,7 +197,7 @@ app.get("/logout",(req,res)=>{
 //rutas para autenticacion
 
 app.post("/signup",passport.authenticate("signupStrategy",{
-    failureRedirect:"/registro",
+    failureRedirect:"/failRegistro",
     failureMessage: true
 }),(req,res)=>{
     const user = req.body.email;
@@ -197,7 +208,7 @@ app.post("/signup",passport.authenticate("signupStrategy",{
 //ruta de autenticacion login
 
 app.post("/login",passport.authenticate("loginStrategy",{
-    failureRedirect:"/login",
+    failureRedirect:"/failLogin",
     failureMessage: true
 }),(req,res)=>{
     const user = req.body.email;
